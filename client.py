@@ -1,15 +1,19 @@
 import requests
 
 # アップロードするファイルのパス
-file_path = "input/sample.txt"
+file_paths = [
+    "input/sample.txt",
+    "input/sample.mp3",
+]
 
 # API エンドポイント
-url = "http://127.0.0.1:8000/upload_file/"
+url = "http://127.0.0.1:8000/upload_files/"
+
+# アップロードするファイルを準備
+files = [("files", open(file_path, "rb")) for file_path in file_paths]
 
 # ファイルをアップロード
-with open(file=file_path, mode="rb") as file:
-    files = {"file": file}
-    response = requests.post(url=url, files=files)
+response = requests.post(url=url, files=files)
 
 # レスポンスを表示
 print(response.json())
